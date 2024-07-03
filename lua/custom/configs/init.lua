@@ -4,3 +4,5 @@
 -- See the kickstart.nvim README for more information
 
 require 'custom.configs.templ'
+require 'custom.configs.wsl'
+require 'custom.configs.keybinds'

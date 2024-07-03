@@ -541,7 +541,7 @@ require('lazy').setup({
         -- clangd = {},
         gopls = {},
         -- html = {},
-        emmet_language_server = { filetypes = { 'php' } },
+        -- emmet_language_server = { filetypes = { 'php' } },
         templ = {},
         intelephense = {},
         -- htmx = { filetypes = { 'html', 'templ' } },
@@ -745,7 +745,9 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'gruvbox'
+      --vim.o.background = 'none'
+      vim.api.nvim_set_hl(0, 'Normal', { guibg = NONE, ctermbg = NONE })
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
