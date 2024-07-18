@@ -6,3 +6,4 @@
 require 'custom.configs.templ'
 require 'custom.configs.wsl'
 require 'custom.configs.keybinds'
+require 'custom.configs.neovide'

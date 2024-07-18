@@ -190,6 +190,25 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.keymap.set('n', '<C-=>', function()
+  -- '<C-w><C-+>'
+  local all_options = vim.api.nvim_get_all_options_info()
+  local win_number = vim.api.nvim_get_current_win()
+  local v = vim.wo[win_number]
+  local all_options = vim.api.nvim_get_all_options_info()
+  local result = ''
+  for key, val in pairs(all_options) do
+    if val.global_local == false and val.scope == 'win' then
+      result = result .. '|' .. key .. '=' .. tostring(v[key] or '<not set>')
+    end
+  end
+  print 'test'
+  print(result)
+end, { desc = 'Increase window height' })
+vim.keymap.set('n', '<C-->', '<C-w><C-->', { desc = 'Decrease window height' })
+vim.keymap.set('n', '<C-.>', '<C-w><C->>', { desc = 'Increae window width' })
+vim.keymap.set('n', '<C-,>', '<C-w><C-<>', { desc = 'Decrease window width' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -368,7 +387,7 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<A-p>', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>g', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -538,24 +557,6 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        gopls = {},
-        -- html = {},
-        -- emmet_language_server = { filetypes = { 'php' } },
-        templ = {},
-        intelephense = {},
-        -- htmx = { filetypes = { 'html', 'templ' } },
-        -- pyright = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        tsserver = {},
-        --
-
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -746,7 +747,7 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'gruvbox'
-      --vim.o.background = 'none'
+      -- vim.o.background = 'light'
       vim.api.nvim_set_hl(0, 'Normal', { guibg = NONE, ctermbg = NONE })
 
       -- You can configure highlights by doing something like:
